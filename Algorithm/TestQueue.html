@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<script src="./Queue.js"></script>
+	</head>
+	<body>
+		<script>
+			function writeLine(text){
+				var node = document.body.innerHTML +=
+					'<div>'+ text + '</div>';
+			}
+			
+			writeLine('Queue Test');
+			
+			//	Test Add works.
+			function testQueue(){
+				writeLine('Testing Queue');
+				var queue = new Queue();
+				queue.Enqueue(1);
+				queue.Enqueue(2);
+				writeLine(queue.Dequeue().value);
+				writeLine(queue.Dequeue().value);
+				queue.Enqueue(3);
+				queue.Enqueue(4);
+				writeLine(queue.Dequeue().value);
+				writeLine(queue.Dequeue().value);
+			}
+			
+			testQueue();
+			
+		</script>
+	</body>
+</html>

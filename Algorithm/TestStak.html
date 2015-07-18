@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<script src="./Stack.js"></script>
+	</head>
+	<body>
+		<script>
+			function writeLine(text){
+				var node = document.body.innerHTML +=
+					'<div>'+ text + '</div>';
+			}
+			
+			writeLine('Stack Test');
+			
+			//	Test Add works.
+			function testStack(){
+				writeLine('Testing Stack');
+				var stack = new Stack();
+				stack.Push(1);
+				stack.Push(2);
+				writeLine(stack.Pop().value);
+				writeLine(stack.Pop().value);
+				stack.Push(3);
+				stack.Push(4);
+				writeLine(stack.Pop().value);
+				writeLine(stack.Pop().value);
+			}
+			
+			testStack();
+			
+		</script>
+	</body>
+</html>

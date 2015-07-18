@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<script src="./List.js"></script>
+	</head>
+	<body>
+		<script>
+			function writeLine(text){
+				var node = document.body.innerHTML +=
+					'<div>'+ text + '</div>';
+			}
+			
+			writeLine('List Test');
+			
+			//	Test Add works.
+			function testAdd(){
+				writeLine('Testing Add');
+				var list = new List();
+				list.Add(1);
+				list.Add(2);
+				writeLine('....Asset list.head is 1: ' + (list.head.value == 1));
+				writeLine('....Asset list.head.next is 2: ' + (list.head.next.value == 2));
+			}
+			testAdd();
+			//	Test Traverse
+			function testTraverse(){
+				writeLine('Testing Traverse');
+				var list = new List();
+				list.Add(1);
+				list.Add(2);
+				list.Add(3);
+				list.Add(4);
+				list.Add(5);
+				writeLine('....Traverse test: ' + list.traverse(function(value){ return value}) + ' should equal ' + '1,2,3,4,5');
+			}
+			testTraverse();
+			//	Test Remove Works
+			function testRemove(){
+				writeLine('Testing Traverse');
+				var list = new List();
+				list.Add(1);
+				list.Add(2);
+				list.Add(3);
+				list.Add(4);
+				list.Add(5);
+				list.Remove();
+				list.Remove();
+				writeLine('....Traverse test: ' + list.traverse(function(value){ return value}) + ' should equal ' + '1,2,3');
+			}
+			testRemove();
+			
+		</script>
+	</body>
+</html>
