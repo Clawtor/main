@@ -1,0 +1,32 @@
+<html>
+	<body>
+		<script>
+			function palindrom(){
+				for(var i=1998;i>99;i--){
+					var a = 999;
+					var b = i-1000;
+					
+					while(a > b){
+						if(isPalindrome(a*b)){
+							return a*b;
+						}
+						a--;
+						b++;
+					} 
+				}
+			}
+			
+			function isPalindrome(n){
+				var a = n;
+				var m = 0;
+				while(a >= 1){
+					m *= 10;
+					m = m + a % 10;
+					a = Math.floor(a/10);
+				}
+				return m == n;
+			}  
+			console.log(palindrom());
+		</script>		
+	</body>
+</html>

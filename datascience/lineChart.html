@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<script src="Chart.js"></script>
+	</head>
+	<body>
+		<canvas id="myChart" width="400" height="400"></canvas>
+		
+		
+		<script>
+			var ctx = document.getElementById("myChart").getContext("2d");
+			var myNewChart = new Chart(ctx).Line(
+				{
+					labels: ["1950", "1960", "1970", "1980", "1990", "2000", "2010"],
+					datasets:[
+						{
+							data: [300.2, 543.3, 1075.0, 2862.5, 5979, 10289, 14958]
+						}
+					]
+				}
+			)
+		
+		</script>
+	</body>
+</html>
+

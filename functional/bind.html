@@ -1,0 +1,28 @@
+<html>
+	<body>
+		<script>
+		var user = {
+			data :[
+				{name: "T.Woods", age:37},
+				{name: "P.Mickelson", age:43}
+			],
+			f: function(){
+				var randomNum = ((Math.random () * 2 | 0) + 1) - 1; 
+				console.log(this.data[randomNum].name + " " + this.data[randomNum].age); 
+			}
+		}
+
+		user.f();
+		
+		var car = {
+			data: [
+				{name: "legnum", age:10},
+				{name: "Sierra", age:20}
+			]
+		}
+		
+		car.showData = user.f.bind(car);
+		car.showData();
+		</script>
+	</body>
+</html>

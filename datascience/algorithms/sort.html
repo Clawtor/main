@@ -1,0 +1,183 @@
+<html>
+	<body>
+		<canvas id='canvas'></canvas>
+		<script>
+			var length = 10000;
+			//testSort(selectionSort);
+			//testSort(insertionSort);
+			//testSort(bubblesort);
+			//testSort(mergeSort);
+			
+			//testPartition();
+			
+			testSort(quicksort);
+			
+			function generateData(length){
+				var data = [];
+				
+				for(var i=0;i<length;i++){
+					data.push(Math.random() * length);
+				}
+				return data;
+			}
+			 
+			function testSort(sort){
+				var before = new Date(); 
+				var data = [4,3,2,1];//generateData(length);
+				sort(data, 0, data.length-1)
+				testSorted(data);
+				dateDifference(before);
+			}
+			
+			function testSorted(array){
+				var last = array[0];
+				for(var i=1;i<array.length;i++){
+					if(array[i] < last){
+						console.log("Not sorted.");
+						return;
+					}
+					last = array[i];
+				}
+				console.log("Sorted.");
+			}
+			
+			function selectionSort(data){
+				var array = data;
+				for(var i=0;i<array.length;i++){
+					var smallest = i;
+					for(var j=i;j<array.length;j++){
+						if(array[j] < array[smallest]){
+							smallest = j;
+						}
+					}
+					swap(array,i, smallest);
+				}
+				return array;
+			}
+			
+			function insertionSort(data){
+				var array = data;
+				var j=0;
+				for(var i=0;i< array.length;i++){
+					j = i;
+					while(j > 0 && array[j-1] > array[j]){
+						swap(array, j, j-1);
+						j--;
+					}
+				}
+				return array;
+			}
+			
+			function mergeSort(arr, start, end){
+				if(start == end){
+					return;
+				}
+				
+				var middle = Math.floor((start+end)/2);
+				mergeSort(arr, start, middle);
+				mergeSort(arr, middle+1, end);
+				merge(arr, start, middle, end);
+				return arr;
+			}
+			
+			function merge(arr, start, middle, end){
+				//	For start to end 
+				var L = [];
+				var R = [];
+				for(var i=start;i<=middle;i++){
+					L.push(arr[i]);
+				}
+				for(var i=middle+1;i<=end;i++){
+					R.push(arr[i]);
+				}
+				var l = 0; var r = 0;
+				var index = start;
+				while(l < L.length && r < R.length){
+					if(L[l] < R[r]){
+						arr[index] = L[l];
+						l++; index++;
+					}else{
+						arr[index] = R[r];
+						r++; index++;
+					}
+				}
+				for(;l<L.length;l++, index++){
+					arr[index] = L[l]; 
+				}
+				for(;r<R.length;r++, index++){
+					arr[index] = R[r]; 
+				}
+			}
+			function bubblesort(data){
+				var array = data;
+				do{
+					var swapped = false;
+					for(var i=1;i<array.length;i++){
+						if(array[i-1] > array[i]){
+							swapped = true;
+							swap(array,i-1, i);
+						}
+					}
+				}while(swapped);
+				return array;
+			}
+			
+			function quicksort(array, lo, hi){
+				if(lo < hi){
+					var partitionIndex = partition(array, lo, hi);
+					quicksort(array, lo, partitionIndex-1);
+					quicksort(array, partitionIndex+1, hi);
+				}
+				//	Select pivot
+				
+				
+			}
+			
+			function partition(array, lo, hi){
+				var pivotIndex = Math.floor((lo+hi)/2);
+				var pivotValue = array[pivotIndex];
+				
+				swap(array, pivotIndex, hi);
+				storeIndex = lo;
+				
+				for(var i=lo;i<hi;i++){
+					if(array[i] < array[pivotIndex]){
+						swap(array, i, storeIndex);
+						storeIndex++;
+					}
+				}
+				swap(array, storeIndex, hi);
+				return storeIndex;
+			}
+			
+			function testPartition(length){
+				var array = generateData(10);
+				partition(array, 0, array.length-1);
+				//	Everything should be less than pivot value then greater.
+				var pivotValue = array[Math.floor((length-1)/2)];
+				var partitioned = true;
+				var lessThan = true;
+				for(var i=0;i<length;i++){
+					if(lessThan && array[i] > pivotValue){
+						lessThan=false;
+					}
+					if(lessThan == false && array[i] < pivotValue){
+						partitioned = false;
+						break;
+					}
+				}
+				console.log("Partitioned == " + partitioned);
+			}
+			
+			function dateDifference(before){
+				console.log((new Date() - before)/1000 + " seconds.");
+			}
+			 
+			function swap(array, a, b){
+				var temp  = array[a];
+				array[a] = array[b];
+				array[b] = temp;
+			} 
+		</script>
+	</body>
+</html>

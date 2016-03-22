@@ -1,0 +1,30 @@
+<html>
+	<body>
+		<script>
+		
+			var sum = 0;
+			function fib(limit){
+				var val1 = 1;
+				var val2 = 1;
+				
+				var currentVal = 0;
+				while(currentVal < limit){
+					currentVal = val1+val2;
+					console.log(currentVal);
+					
+					if(currentVal % 2== 0){
+						sum += currentVal;
+						console.log("Sum: " + sum);
+					}
+					val1 = val2;
+					val2 = currentVal;
+				}
+			}
+			
+			fib(4000000);
+		
+		</script>
+		
+	
+	</body>
+</html>

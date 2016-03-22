@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<script src='unionFind.js'></script>
+		<script src='utils.js'></script>
+	</head>
+	
+	<body>
+		<script>
+			var size = 100000;
+			var uf = new unionFind(size);
+			testFunctionSpeed(function(){
+				for(var i=0;i<100;i++){
+					uf.union(Math.floor(Math.random() * size), Math.floor(Math.random() * size));
+				}
+			})
+			uf.display();
+		</script>
+	</body>
+</html>

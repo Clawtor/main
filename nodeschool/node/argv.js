@@ -1,0 +1,1 @@
+console.log(process.argv.slice(2).reduce(function(previous, current){ return +previous + +current}))

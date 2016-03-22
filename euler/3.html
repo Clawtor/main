@@ -1,0 +1,75 @@
+<html>
+	<body>
+		<script>
+			function fermatFactorization(n){
+				if(n % 2 == 0){
+					while(n % 2 == 0 && n > 2){
+						n = n/2;
+					}
+					return n;
+				}
+				var a = Math.ceil(Math.sqrt(n));
+				var b2 = a*a - n;
+				
+				while(isSquare(b2) == false){
+					a +=1;
+					b2 = a*a - n;
+				}
+				console.log(a + Math.sqrt(b2));
+				console.log(a - Math.sqrt(b2));
+			}
+			
+			function isSquare(n){
+				var s = Math.floor(Math.sqrt(n));
+				if(s*s == n){
+					return true;
+				}
+				return false;
+			}
+			
+			function slowFactorisation(n){
+				if(n % 2 == 0){
+					while(n % 2 == 0 && n > 2){
+						n = n/2;
+						if(n == 2){
+							return n;
+						}
+					} 
+				}
+				var t = 3;
+				var factors = [];
+				while(t < Math.ceil(Math.sqrt(n))){
+					if(n % t == 0 ){
+						var prime = true;
+						for(var i=0;i<factors.length;i++){
+							if(n % factors[i] == 0){
+								prime = false;
+							}
+						}
+						if(prime){
+							factors.push(t);
+						} 
+					}
+					t += 2;
+				}
+				return factors;
+			}
+			
+			function orderNFact(n){
+				var factors = [];
+				var d = 2;  
+				while(n > 1 ){
+					while(n%d == 0){
+						factors.push(d);
+						n /= d; 
+					}
+					d += 1; 
+				}
+				return factors;
+			}
+			console.log(orderNFact(600851475143))
+			//console.log(slowFactorisation(600851475143));
+			//600851475143
+		</script>		
+	</body>
+</html>
