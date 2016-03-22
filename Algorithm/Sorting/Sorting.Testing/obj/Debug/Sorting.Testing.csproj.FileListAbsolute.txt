@@ -1,0 +1,10 @@
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\Sorting\Sorting.Testing\bin\Debug\Sorting.Testing.exe.config
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\Sorting\Sorting.Testing\bin\Debug\Sorting.Testing.exe
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\Sorting\Sorting.Testing\bin\Debug\Sorting.Testing.pdb
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\Sorting\Sorting.Testing\bin\Debug\nunit.framework.dll
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\Sorting\Sorting.Testing\bin\Debug\Sorting.exe
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\Sorting\Sorting.Testing\bin\Debug\Sorting.pdb
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\Sorting\Sorting.Testing\bin\Debug\nunit.framework.xml
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\Sorting\Sorting.Testing\obj\Debug\Sorting.Testing.csprojResolveAssemblyReference.cache
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\Sorting\Sorting.Testing\obj\Debug\Sorting.Testing.exe
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\Sorting\Sorting.Testing\obj\Debug\Sorting.Testing.pdb

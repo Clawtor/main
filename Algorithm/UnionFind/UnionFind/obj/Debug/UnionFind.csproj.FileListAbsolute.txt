@@ -1,0 +1,6 @@
+c:\users\oem\documents\visual studio 2015\Projects\UnionFind\UnionFind\bin\Debug\UnionFind.exe.config
+c:\users\oem\documents\visual studio 2015\Projects\UnionFind\UnionFind\bin\Debug\UnionFind.exe
+c:\users\oem\documents\visual studio 2015\Projects\UnionFind\UnionFind\bin\Debug\UnionFind.pdb
+c:\users\oem\documents\visual studio 2015\Projects\UnionFind\UnionFind\obj\Debug\UnionFind.csprojResolveAssemblyReference.cache
+c:\users\oem\documents\visual studio 2015\Projects\UnionFind\UnionFind\obj\Debug\UnionFind.exe
+c:\users\oem\documents\visual studio 2015\Projects\UnionFind\UnionFind\obj\Debug\UnionFind.pdb

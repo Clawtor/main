@@ -1,0 +1,6 @@
+c:\users\oem\documents\visual studio 2015\Projects\Probability_chp1\Probability_chp1\bin\Debug\Probability_chp1.exe.config
+c:\users\oem\documents\visual studio 2015\Projects\Probability_chp1\Probability_chp1\bin\Debug\Probability_chp1.exe
+c:\users\oem\documents\visual studio 2015\Projects\Probability_chp1\Probability_chp1\bin\Debug\Probability_chp1.pdb
+c:\users\oem\documents\visual studio 2015\Projects\Probability_chp1\Probability_chp1\obj\Debug\Probability_chp1.exe
+c:\users\oem\documents\visual studio 2015\Projects\Probability_chp1\Probability_chp1\obj\Debug\Probability_chp1.pdb
+c:\users\oem\documents\visual studio 2015\Projects\Probability_chp1\Probability_chp1\obj\Debug\Probability_chp1.csprojResolveAssemblyReference.cache

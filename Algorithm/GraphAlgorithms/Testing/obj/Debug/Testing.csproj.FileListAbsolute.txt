@@ -1,0 +1,9 @@
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\GraphAlgorithms\Testing\obj\Debug\Testing.csprojResolveAssemblyReference.cache
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\GraphAlgorithms\Testing\bin\Debug\Testing.exe.config
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\GraphAlgorithms\Testing\bin\Debug\Testing.exe
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\GraphAlgorithms\Testing\bin\Debug\Testing.pdb
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\GraphAlgorithms\Testing\bin\Debug\GraphAlgorithms.exe
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\GraphAlgorithms\Testing\bin\Debug\nunit.framework.dll
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\GraphAlgorithms\Testing\bin\Debug\GraphAlgorithms.pdb
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\GraphAlgorithms\Testing\obj\Debug\Testing.exe
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\GraphAlgorithms\Testing\obj\Debug\Testing.pdb

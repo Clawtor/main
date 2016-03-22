@@ -1,0 +1,6 @@
+c:\users\oem\documents\visual studio 2015\Projects\Monads\Monads\bin\Debug\Monads.exe.config
+c:\users\oem\documents\visual studio 2015\Projects\Monads\Monads\bin\Debug\Monads.exe
+c:\users\oem\documents\visual studio 2015\Projects\Monads\Monads\bin\Debug\Monads.pdb
+c:\users\oem\documents\visual studio 2015\Projects\Monads\Monads\obj\Debug\Monads.csprojResolveAssemblyReference.cache
+c:\users\oem\documents\visual studio 2015\Projects\Monads\Monads\obj\Debug\Monads.exe
+c:\users\oem\documents\visual studio 2015\Projects\Monads\Monads\obj\Debug\Monads.pdb

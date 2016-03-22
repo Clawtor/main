@@ -1,0 +1,9 @@
+c:\users\oem\documents\visual studio 2015\Projects\SegregationModel\SegregationModel\bin\Debug\SegregationModel.exe.config
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\SegregationModel\SegregationModel\bin\Debug\SegregationModel.exe
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\SegregationModel\SegregationModel\bin\Debug\SegregationModel.pdb
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\SegregationModel\SegregationModel\obj\Debug\SegregationModel.csprojResolveAssemblyReference.cache
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\SegregationModel\SegregationModel\obj\Debug\SegregationModel.Form1.resources
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\SegregationModel\SegregationModel\obj\Debug\SegregationModel.Properties.Resources.resources
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\SegregationModel\SegregationModel\obj\Debug\SegregationModel.csproj.GenerateResource.Cache
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\SegregationModel\SegregationModel\obj\Debug\SegregationModel.exe
+C:\Users\OEM\Documents\Visual Studio 2015\Projects\SegregationModel\SegregationModel\obj\Debug\SegregationModel.pdb
