@@ -15,75 +15,84 @@ namespace SupplyDemandModel
 		public static void Main(string[] args)
 		{
 			var r = new Random();
-			var agent1 = new Farmer()
-			{
-				Name = "Farmer1"
-			};
-			var agent2 = new Farmer()
-			{
-				Name = "Farmer2"
-			};
 
-			var agent3 = new Farmer()
+			var farmers = new List<Farmer>();
+			var farmerNumber = 10;
+
+			var farmersOverTime = new List<int>();
+			var foodPriceOverTime = new List<double>();
+
+			for(var i=0;i<farmerNumber;i++)
 			{
-				Name = "Farmer3"
-			};
+				farmers.Add(new Farmer(r) { Name = $"Farmer{i}" });
+			}
 
 			var broker = new Broker();
+			var rainFallModifier = 1.2;
 
-			for (int i = 0;i<100;i++)
+			for (int i = 0; i < 100; i++)
 			{
-				agent1.Produce(r);
-				agent1.Upkeep();
-				agent1.Desire();
-				Console.WriteLine($"Agent 1 Food = {agent1.Food.Quantity}, Desire for Food = {agent1.Food.Desire}. Gold = {agent1.Gold.Quantity}");
+				if(i > 0 && i % 10 == 0)
+				{
+					rainFallModifier = r.Next(6, 15)/10.0;
+				}
+				Console.WriteLine($"Rainfall Modifier = {rainFallModifier}.");
 
-				agent2.Produce(r);
-				agent2.Upkeep();
-				agent2.Desire();
-				Console.WriteLine($"Agent 2 Food = {agent2.Food.Quantity}, Desire for Food = {agent2.Food.Desire}. Gold = {agent2.Gold.Quantity}");
+				foreach(var agent in farmers)
+				{
+					agent.Produce(rainFallModifier);
+					agent.Upkeep();
+					agent.Desire();
 
-				agent3.Produce(r);
-				agent3.Upkeep();
-				agent3.Desire();
-
-				Console.WriteLine($"Agent 3 Food = {agent3.Food.Quantity}, Desire for Food = {agent3.Food.Desire}. Gold = {agent3.Gold.Quantity}");
-				//	Note -> Buying and selling should be determined randomly..?
-
-				agent1.Sell(broker);
-				agent1.Buy(broker);
-				agent1.Food.TickEnd();
-
-				agent2.Sell(broker);
-				agent2.Buy(broker);
-				agent2.Food.TickEnd();
-
-				agent3.Sell(broker);
-				agent3.Buy(broker);
-				agent3.Food.TickEnd();
-
-				Console.WriteLine("Broker Buy Offers:");
-				foreach (var b in broker.BuyOffers)
-					Console.WriteLine($"\t{b.Quantity} units of type {b.CommodityType} at {b.PriceEach} each.");
-
-				Console.WriteLine("Broker Sell Offers:");
-				foreach (var b in broker.SellOffers)
-					Console.WriteLine($"\t{b.Quantity} units of type {b.CommodityType} at {b.PriceEach} each.");
+					agent.Sell(broker);
+					agent.Buy(broker);
+					agent.Food.TickEnd();
+				}
 
 				broker.ProcessOffers();
 
-				Console.WriteLine($"The Price of food is {broker.Price}");
+				//	Need to redistribute gold from dead farmers.
+				var deadGold = farmers.Where(x => x.Alive == false).Sum(x => x.Gold.Quantity);
+				
+				Console.WriteLine($"{farmers.Count(x => x.Alive == false)} farmers died.");
 
-				Console.WriteLine($"Total gold = {agent1.Gold.Quantity + agent2.Gold.Quantity + agent3.Gold.Quantity}");
-
-				if (agent1.Gold.Quantity + agent2.Gold.Quantity + agent3.Gold.Quantity != 15)
+				farmers = farmers.Where(x => x.Alive).ToList();
+				if (deadGold > 0)
 				{
-					Console.WriteLine();
+					foreach (var f in farmers)
+					{
+						f.Gold.Quantity += deadGold / farmers.Count;
+					}
+				}
+				Console.WriteLine($"{farmers.Count(x => x.Reproduce == true)} farmers born.");
+
+				var bornList = new List<Farmer>();
+
+				foreach (var f in farmers.Where(x => x.Reproduce))
+				{
+					var newFarmer = new Farmer(r) { Name = $"so_{f.Name}" };
+
+					var halfFood = f.Food.Quantity / 2;
+					var halfGold = f.Gold.Quantity / 2;
+
+					newFarmer.Food.Quantity = halfFood;
+					newFarmer.Gold.Quantity = halfGold;
+
+					bornList.Add(newFarmer);
+
+					f.Reproduce = false;
+					f.Food.Quantity = halfFood;
+					f.Gold.Quantity = halfGold;
 				}
 
-				Console.ReadLine();
-            }
+				farmers.AddRange(bornList);
+				Console.WriteLine($"Number of farmers: {farmers.Count}");
+				Console.WriteLine($"The Price of food is {broker.Price}");
 
+				Console.WriteLine($"Total gold = {farmers.Sum(x => x.Gold.Quantity)}");
+				
+				Console.ReadLine();
+			}
 			Console.ReadLine();
 		}
 
@@ -100,7 +109,8 @@ namespace SupplyDemandModel
 			{
 				if (BuyOffers.Count() == 0)
 				{
-					Price -= Price * PriceInflation; Console.WriteLine("Price decreased.");
+					Price -= Price * PriceInflation;
+					BuyOffers.Clear();
 					SellOffers.Clear();
 					return;
 				}
@@ -109,128 +119,72 @@ namespace SupplyDemandModel
 				{
 					Price += Price * PriceInflation;
 					BuyOffers.Clear();
+					SellOffers.Clear();
 					return;
 				}
 
-				var sale = 0;
-				var goldLost = 0.0;
-				var goldGained = 0.0;
+				var sellTotal = SellOffers.Sum(x => x.Quantity);
+				var buyTotal = BuyOffers.Sum(x => x.Quantity);
 
-				//	If there are more buy offers then sell offers
-				if (BuyOffers.Select(x => x.Quantity).Sum() > SellOffers.Select(x => x.Quantity).Sum())
+				if (buyTotal > sellTotal)
 				{
+					var commoditySold = sellTotal;
+					var fractionBought = sellTotal / buyTotal;
+
+					foreach (var buy in BuyOffers)
+					{
+						var buyAmount = buy.Quantity * fractionBought;
+						buy.Farmer.Food.Quantity += buyAmount;
+						buy.Farmer.Gold.Quantity -= buyAmount * Price;
+                    }
+
+					foreach(var sell in SellOffers)
+					{
+						var sellAmount = sell.Quantity;
+						sell.Farmer.Food.Quantity -= sellAmount;
+						sell.Farmer.Gold.Quantity += sellAmount * Price; 
+					}
+
 					Price += Price * PriceInflation;
-					BuyOffers = BuyOffers.Where(x => x.Desire > 0.5).ToList();
-					Console.WriteLine($"Price = {Price}");
-
-					//	Problem currently is that a wealthy farmer with low desire for food
-					//	will get as much of a commodity as a farmer with more desire.
-					//	Need a system of bidding.
-
-					
-					var orderedOffers = BuyOffers.OrderByDescending(x => x.Desire).ToList();
-					var commodityAmount = SellOffers.Sum(x => x.Quantity);
-                    while (commodityAmount > 0 && orderedOffers.Count() > 0)
-					{
-						
-						for(var i=orderedOffers.Count-1;i>=0;i--)
-						{
-							var offer = orderedOffers[i];
-							if(offer.Farmer.Gold.Quantity > Price)
-							{
-								//	Transaction
-								GoldPool += Price;
-								goldLost -= Price;
-								offer.Farmer.Gold.Quantity -= Price;
-								offer.Farmer.Food.Quantity += 1;
-								commodityAmount -= 1;
-								sale++;
-							}else
-							{
-								orderedOffers.Remove(offer);
-								if (orderedOffers.Count == 0) break;
-							}
-						}
-						//	Update desires.
-					}
-					if(sale > 0)
-					{
-						var goldEach = GoldPool / sale;
-						goldGained = GoldPool;
-						Console.WriteLine($"Gold lost = {goldLost}");
-						Console.WriteLine($"Gold gained = {goldGained}");
-						//	Then distribute the money.
-						foreach (var offer in SellOffers)
-						{
-							offer.Farmer.Gold.Quantity += offer.Quantity * goldEach;
-						}
-					}
-				}
-				else
-				{
-					//	Sellers market.
-					//	The same as above but for selling.
-					//	Dec
-					Price -= Price * PriceInflation; Console.WriteLine("Price decreased.");
-					var orderedOffers = BuyOffers.OrderByDescending(x => x.Desire).ToList();
-					var commodityAmount = SellOffers.Sum(x => x.Quantity);
-					while (commodityAmount > 0 && orderedOffers.Count() > 0)
-					{
-						
-						for (var i = orderedOffers.Count - 1; i >= 0; i--)
-						{
-							var offer = orderedOffers[i];
-							if (offer.Farmer.Gold.Quantity > Price)
-							{
-								//	Transaction
-								GoldPool += Price;
-								offer.Farmer.Gold.Quantity -= Price;
-								offer.Farmer.Food.Quantity += 1;
-								sale++;
-								commodityAmount -= 1;
-							}
-							else
-							{
-								orderedOffers.Remove(offer);
-								if (orderedOffers.Count == 0) break;
-							}
-						}
-						//	Update desires.
-					}
-					if (sale > 0)
-					{
-						var goldEach = GoldPool / sale;
-						Console.WriteLine($"Gold each = {goldEach}");
-						//	Then distribute the money.
-                        foreach (var offer in SellOffers)
-						{
-							offer.Farmer.Gold.Quantity += offer.Quantity * goldEach;
-						}
-					}
-					if (commodityAmount > 0)
-					{
-						Price -= Price * PriceInflation; Console.WriteLine("Price decreased.");
-					}
                 }
 
-				if(Math.Abs(goldGained) != Math.Abs(goldLost))
+				if (buyTotal < sellTotal)
 				{
-					Console.WriteLine();
+					var commoditySold = buyTotal;
+					var fractionSold = buyTotal / sellTotal;
+					foreach (var buy in BuyOffers)
+					{
+						var buyAmount = buy.Quantity;
+						buy.Farmer.Food.Quantity += buyAmount;
+						buy.Farmer.Gold.Quantity -= buyAmount * Price;
+					}
+
+					foreach (var sell in SellOffers)
+					{
+						var sellAmount = sell.Quantity * fractionSold;
+						sell.Farmer.Food.Quantity -= sellAmount;
+						sell.Farmer.Gold.Quantity += sellAmount * Price;
+					}
+
+					Price -= Price * PriceInflation;
 				}
 
-				GoldPool = 0;
 				BuyOffers.Clear();
 				SellOffers.Clear();
 			}
 		}
-
+		
 		public class Farmer
 		{
+			private Random Random { get; }
 			public string Name { get; set; }
+			public bool Reproduce = false;
+			public Dictionary<CommodityType, Commodity> Commodities = new Dictionary<CommodityType, Commodity>();
+
 			public Commodity Food { get; set; } = new Commodity()
 			{
 				Type = CommodityType.Food,
-				Max = 10,
+				Max = 14,
 				Min = 1, 
 				ProduceQuantity = 4,
 				Quantity = 4,
@@ -249,20 +203,32 @@ namespace SupplyDemandModel
 				Desire = 0.5
 			};
 
+			public Farmer(Random random)
+			{
+				Random = random;
+				Commodities.Add(CommodityType.Food, Food);
+				Commodities.Add(CommodityType.Gold, Gold);
+			}
+
 			public Demand Demand { get; set; }
 			public bool Alive { get; set; } = true;
 
-			public void Produce(Random r)
+			public void Produce(double rainfallModifier)
 			{
 				Food.TickStart();
-				if(r.NextDouble() > 0.5)
-					Food.Quantity += Food.ProduceQuantity;
+				if(Random.NextDouble() > 0.5)
+					Food.Quantity += Food.ProduceQuantity * rainfallModifier;
 			}
 
 			public void Upkeep()
 			{
 				if (Food.Quantity <= 0)
 					Alive = false;
+
+				if (Food.Quantity > Food.Max * 0.75)
+				{
+					Reproduce = true;
+				}
 
 				Food.Quantity -= Food.UpkeepCost;
 			}
@@ -271,76 +237,59 @@ namespace SupplyDemandModel
 			//	how much it has. Returns 0-1
 			public void Desire()
 			{
-				if(Food.UpkeepCost > 0 && Food.Quantity/Food.Max < 0.5)
-				{
-					Food.Desire += -1.0 * (Food.Change()/(double)Food.Max);
-				}else
-				{
-					Food.Desire = 0;
-				}
+				//	Food desire.
+				Food.Desire = Sigmoid(Food.Max - Food.Quantity, 1, Food.Max);
+				//	Desire to sell food, opposite of desire for food?
+				Gold.Desire = 1 - Food.Desire;
+			}
 
-				if (Food.Quantity == 0)
-					Food.Desire = 1;
-
-				if (Food.Desire < 0)
-					Food.Desire = 0;
-				if (Food.Desire > 1)
-					Food.Desire = 1;
-
-				if(Food.Desire == 0)
-				{
-					Gold.Desire = 1;
-				}
-				else
-				{
-					Gold.Desire = 0;
-				}
-
-				//return Food.Desire;
+			private double Sigmoid(double x, double steepness, double max)
+			{
+				return 1 / (1 + Math.Pow(Math.E, -(steepness * (x - max/2))));
 			}
 			
 			public void Sell(Broker broker)
 			{
-				if(Gold.Desire > 0 && Food.Desire == 0)
+				if(Random.NextDouble() < Gold.Desire && Food.Quantity > 0)
 				{
 					//	How much food do you sell..??
 					//	Lets say total - 1.5 * usage.
 					var quantity = Food.Quantity - 1.5 * Food.UpkeepCost;
-					Console.WriteLine($"{Name} wants to sell {quantity} food.");
-
-					var offer = new Offer()
+					if(quantity > 0)
 					{
-						CommodityType = CommodityType.Food,
-						Quantity = quantity,
-						PriceEach = broker.Price, //	Base price on previous price.
-						Desire = Food.Quantity / Food.Max,
-						Farmer = this//	Should be base on how much food you have.
-					};
+						var offer = new Offer()
+						{
+							CommodityType = CommodityType.Food,
+							Quantity = quantity,
+							PriceEach = broker.Price, //	Base price on previous price.
+							Desire = Food.Quantity / Food.Max,
+							Farmer = this//	Should be base on how much food you have.
+						};
 
-					broker.SellOffers.Add(offer);
+						broker.SellOffers.Add(offer);
+					}
 				}
 			}
 
 			//	How much 
 			public void Buy(Broker broker)
 			{
-				if(Gold.Quantity > 0 && Food.Desire > 0)
+				if(Random.NextDouble() < Food.Desire && Gold.Quantity > broker.Price)
 				{
-					Console.WriteLine($"{Name} wants to buy {Food.Max - Food.Quantity} food.");
-
 					//	TODO -> How much to buy.
 					var offer = new Offer()
 					{
 						CommodityType = CommodityType.Food,
 						PriceEach = broker.Price, //Lets just say people try to get the best price possible.
-						Quantity = Food.Max-Food.Quantity,
+						Quantity = (Food.Max - Food.Quantity) * broker.Price <= Gold.Quantity 
+									? Food.Max - Food.Quantity 
+									: Gold.Quantity / broker.Price,
 						Desire = Food.Desire,
 						Farmer = this
 					};
 					broker.BuyOffers.Add(offer);
 				}
 			}
-
 		}
 
 		public enum CommodityType
@@ -350,7 +299,6 @@ namespace SupplyDemandModel
 			Gold
 		}
 		
-
 		public class Commodity
 		{
 			public CommodityType Type { get; set; }
