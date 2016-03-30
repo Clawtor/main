@@ -1,0 +1,6 @@
+C:\Source\Graphics\PerlinNoise\PerlinNoise\bin\PerlinNoise.dll.config
+C:\Source\Graphics\PerlinNoise\PerlinNoise\bin\PerlinNoise.dll
+C:\Source\Graphics\PerlinNoise\PerlinNoise\bin\PerlinNoise.pdb
+C:\Source\Graphics\PerlinNoise\PerlinNoise\obj\Debug\PerlinNoise.csprojResolveAssemblyReference.cache
+C:\Source\Graphics\PerlinNoise\PerlinNoise\obj\Debug\PerlinNoise.dll
+C:\Source\Graphics\PerlinNoise\PerlinNoise\obj\Debug\PerlinNoise.pdb

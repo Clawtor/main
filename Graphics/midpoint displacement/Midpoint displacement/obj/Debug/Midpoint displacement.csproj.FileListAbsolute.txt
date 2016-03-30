@@ -1,0 +1,12 @@
+c:\users\oem\documents\visual studio 2015\Projects\Midpoint displacement\Midpoint displacement\bin\Midpoint displacement.dll.config
+c:\users\oem\documents\visual studio 2015\Projects\Midpoint displacement\Midpoint displacement\bin\Midpoint displacement.dll
+c:\users\oem\documents\visual studio 2015\Projects\Midpoint displacement\Midpoint displacement\bin\Midpoint displacement.pdb
+c:\users\oem\documents\visual studio 2015\Projects\Midpoint displacement\Midpoint displacement\obj\Debug\Midpoint displacement.csprojResolveAssemblyReference.cache
+c:\users\oem\documents\visual studio 2015\Projects\Midpoint displacement\Midpoint displacement\obj\Debug\Midpoint displacement.dll
+c:\users\oem\documents\visual studio 2015\Projects\Midpoint displacement\Midpoint displacement\obj\Debug\Midpoint displacement.pdb
+C:\Source\Graphics\Midpoint displacement\Midpoint displacement\bin\Midpoint displacement.dll.config
+C:\Source\Graphics\Midpoint displacement\Midpoint displacement\bin\Midpoint displacement.dll
+C:\Source\Graphics\Midpoint displacement\Midpoint displacement\bin\Midpoint displacement.pdb
+C:\Source\Graphics\Midpoint displacement\Midpoint displacement\obj\Debug\Midpoint displacement.csprojResolveAssemblyReference.cache
+C:\Source\Graphics\Midpoint displacement\Midpoint displacement\obj\Debug\Midpoint displacement.dll
+C:\Source\Graphics\Midpoint displacement\Midpoint displacement\obj\Debug\Midpoint displacement.pdb
